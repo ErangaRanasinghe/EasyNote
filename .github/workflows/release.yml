@@ -1,0 +1,90 @@
+# Builds Easy Note and publishes a GitHub Release when you push a version tag:
+#   git tag v1.0.0
+#   git push origin v1.0.0
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:        # lets you test the build from the Actions tab (no release is published)
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build EasyNote.exe
+        shell: cmd
+        run: windows\build.bat
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $v = if ("${{ github.ref_type }}" -eq "tag") { "${{ github.ref_name }}".TrimStart("v") } else { "dev" }
+          New-Item -ItemType Directory -Force dist/EasyNote | Out-Null
+          Copy-Item windows/EasyNote.exe dist/EasyNote/
+          Copy-Item README.md dist/EasyNote/
+          Compress-Archive -Path dist/EasyNote -DestinationPath "dist/EasyNote-$v-windows.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/*.zip
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the version numbers match the tag
+        if: github.ref_type == 'tag'
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          grep -q "VERSION = \"$v\"" linux/easynote.py || { echo "linux/easynote.py VERSION is not $v"; exit 1; }
+          grep -q "Version = \"$v\"" windows/EasyNote.cs || { echo "windows/EasyNote.cs AppInfo.Version is not $v"; exit 1; }
+
+      - name: Check the Python code compiles
+        run: python3 -m py_compile linux/easynote.py
+
+      - name: Package
+        run: |
+          v=$([ "$GITHUB_REF_TYPE" = tag ] && echo "${GITHUB_REF_NAME#v}" || echo dev)
+          mkdir -p dist/EasyNote
+          cp -r linux assets README.md dist/EasyNote/
+          rm -f dist/EasyNote/assets/logo.ico
+          chmod +x dist/EasyNote/linux/*.sh dist/EasyNote/linux/easynote.py
+          tar -C dist -czf "dist/EasyNote-$v-linux.tar.gz" EasyNote
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: dist/*.tar.gz
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: [windows, linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Release notes from CHANGELOG.md
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v v="$v" '/^## /{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "Easy Note $v" > notes.md
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: Easy Note ${{ github.ref_name }}
+          body_path: notes.md
+          files: dist/*

@@ -1,0 +1,19 @@
+# Build output
+*.exe
+*.pdb
+dist/
+
+# Packages
+*.zip
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors / OS
+.vs/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
