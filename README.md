@@ -59,4 +59,9 @@ windows/   EasyNote.cs, build.bat
 linux/     easynote.py, install.sh, uninstall.sh
 .github/   release workflow (builds and publishes on a version tag)
 CHANGELOG.md
+LICENSE
 ```
+
+## License
+
+MIT License - see [LICENSE](LICENSE). Copyright (c) 2026 EMR Industries.
