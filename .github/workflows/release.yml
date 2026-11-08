@@ -1,4 +1,4 @@
-# Builds Easy Note and publishes a GitHub Release when you push a version tag:
+# Builds EasyNote and publishes a GitHub Release when you push a version tag:
 #   git tag v1.0.0
 #   git push origin v1.0.0
 name: Release
@@ -82,10 +82,10 @@ jobs:
         run: |
           v="${GITHUB_REF_NAME#v}"
           awk -v v="$v" '/^## /{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > notes.md
-          [ -s notes.md ] || echo "Easy Note $v" > notes.md
+          [ -s notes.md ] || echo "EasyNote $v" > notes.md
 
       - uses: softprops/action-gh-release@v2
         with:
-          name: Easy Note ${{ github.ref_name }}
+          name: EasyNote ${{ github.ref_name }}
           body_path: notes.md
           files: dist/*

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Removes Easy Note. Your saved note in ~/.config/easynote is kept unless you pass --all.
+# Removes EasyNote. Your saved note in ~/.config/easynote is kept unless you pass --all.
 "$HOME/.local/bin/easynote" --quit >/dev/null 2>&1 || true
 rm -rf "$HOME/.local/share/easynote"
 rm -f "$HOME/.local/bin/easynote" \
@@ -8,7 +8,7 @@ rm -f "$HOME/.local/bin/easynote" \
       "${XDG_CONFIG_HOME:-$HOME/.config}/autostart/easynote.desktop"
 if [ "$1" = "--all" ]; then
   rm -rf "${XDG_CONFIG_HOME:-$HOME/.config}/easynote"
-  echo "Easy Note and your saved note were removed."
+  echo "EasyNote and your saved note were removed."
 else
-  echo "Easy Note was removed. Your saved note is still in ~/.config/easynote (use --all to delete it)."
+  echo "EasyNote was removed. Your saved note is still in ~/.config/easynote (use --all to delete it)."
 fi

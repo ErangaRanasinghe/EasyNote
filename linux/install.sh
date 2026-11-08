@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs Easy Note for the current user (no root needed except for missing packages).
+# Installs EasyNote for the current user (no root needed except for missing packages).
 # Works on Ubuntu, Debian, Linux Mint, Raspberry Pi OS, Fedora, Arch and openSUSE.
 set -e
 
@@ -13,7 +13,7 @@ DESKTOP_DIR="$HOME/.local/share/applications"
 PY="${EASYNOTE_PYTHON:-/usr/bin/python3}"
 [ -x "$PY" ] || PY="$(command -v python3)"
 
-echo "Installing Easy Note (EMR Industries)..."
+echo "Installing EasyNote (EMR Industries)..."
 
 # ---- 1. check the libraries it needs --------------------------------------
 need_gtk=0
@@ -48,7 +48,7 @@ if [ $need_gtk = 1 ] || [ $need_tray = 1 ]; then
 
   if [ -n "$cmd" ]; then
     echo
-    [ $need_gtk = 1 ] && echo "Easy Note needs a few system packages (Python GTK)."
+    [ $need_gtk = 1 ] && echo "EasyNote needs a few system packages (Python GTK)."
     [ $need_gtk = 0 ] && echo "Optional: the tray icon needs one extra package."
     echo "  $cmd"
     read -r -p "Install them now? [Y/n] " ans
@@ -79,7 +79,7 @@ chmod +x "$BIN_DIR/easynote" "$APP_DIR/easynote.py"
 cat > "$DESKTOP_DIR/easynote.desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=Easy Note
+Name=EasyNote
 Comment=Quick scratch pad on the edge of your screen
 Exec=$BIN_DIR/easynote
 Icon=easynote
@@ -92,7 +92,7 @@ command -v gtk-update-icon-cache >/dev/null && gtk-update-icon-cache -q "$HOME/.
 
 # ---- 4. start it ----------------------------------------------------------
 echo
-echo "Installed. Easy Note is in your app menu, and 'easynote' works in a terminal."
+echo "Installed. EasyNote is in your app menu, and 'easynote' works in a terminal."
 if [ -n "$DISPLAY$WAYLAND_DISPLAY" ]; then
   nohup "$BIN_DIR/easynote" >/dev/null 2>&1 &
   echo "Started - move the mouse to the right edge of the screen."

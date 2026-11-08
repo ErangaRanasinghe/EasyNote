@@ -1,4 +1,4 @@
-// Easy Note - a tiny scratch pad that hides on the right edge of the screen.
+// EasyNote - a tiny scratch pad that hides on the right edge of the screen.
 // Publisher: EMR Industries
 //
 // Move the mouse to the far right edge of the screen and a small tab appears.
@@ -19,8 +19,8 @@ using System.Windows.Forms;
 using System.Reflection;
 using Microsoft.Win32;
 
-[assembly: AssemblyTitle("Easy Note")]
-[assembly: AssemblyProduct("Easy Note")]
+[assembly: AssemblyTitle("EasyNote")]
+[assembly: AssemblyProduct("EasyNote")]
 [assembly: AssemblyDescription("Quick scratch pad on the edge of your screen")]
 [assembly: AssemblyCompany("EMR Industries")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 EMR Industries")]
@@ -29,7 +29,7 @@ using Microsoft.Win32;
 
 static class AppInfo
 {
-    public const string Name = "Easy Note";
+    public const string Name = "EasyNote";
     public const string Version = "1.0.0";
     public const string Publisher = "EMR Industries";
 
@@ -327,7 +327,7 @@ class EasyNoteApp : ApplicationContext
         new SplashWindow(Theme.Current()).ShowFor(2000);
     }
 
-    // If "Start with Windows" was on in the old EdgeNote, point it at Easy Note instead
+    // If "Start with Windows" was on in the old EdgeNote, point it at EasyNote instead
     void MigrateStartup()
     {
         try
@@ -569,7 +569,7 @@ class NoteWindow : Form
 
         float s = Art.Scale(this);
         float dpi = Art.Dpi(this);
-        Size = new Size((int)(4.2f * dpi), (int)(2.0f * dpi));   // about 4.2 x 2 inches
+        Size = new Size((int)(6.2f * dpi), (int)(2.0f * dpi));   // about 6.2 x 2 inches  <- change width here
 
         // --- top strip: drag handle + buttons ---
         bar = new Panel();

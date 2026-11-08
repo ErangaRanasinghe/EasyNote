@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Easy Note for Linux - a tiny scratch pad that hides on the right edge of the screen.
+# EasyNote for Linux - a tiny scratch pad that hides on the right edge of the screen.
 # Publisher: EMR Industries
 #
 # Move the mouse to the far right edge of the screen and a small tab appears.
@@ -17,7 +17,7 @@ import socket
 import threading
 import datetime
 
-APP_NAME = "Easy Note"
+APP_NAME = "EasyNote"
 VERSION = "1.0.0"
 PUBLISHER = "EMR Industries"
 APP_ID = "easynote"
@@ -415,7 +415,7 @@ class NoteWindow(Gtk.Window):
         dpi = Gdk.Screen.get_default().get_resolution()
         if dpi is None or dpi <= 0:
             dpi = 96.0
-        self.set_default_size(int(4.2 * dpi), int(2.0 * dpi))   # about 4.2 x 2 inches  <- change width here
+        self.set_default_size(int(6.2 * dpi), int(2.0 * dpi))   # about 6.2 x 2 inches  <- change width here
 
         frame = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         frame.get_style_context().add_class("en-frame")
@@ -868,7 +868,7 @@ def main():
     if cmd == "quit":
         return
     if Gdk.Display.get_default() is None:
-        print("Easy Note needs a graphical desktop session.", file=sys.stderr)
+        print("EasyNote needs a graphical desktop session.", file=sys.stderr)
         sys.exit(1)
 
     import signal

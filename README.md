@@ -1,4 +1,4 @@
-# Easy Note
+# EasyNote
 
 A tiny scratch pad that hides on the right edge of your screen.
 Version 1.0.0 · Publisher: EMR Industries
@@ -29,7 +29,7 @@ bash install.sh
 ```
 
 The installer asks before installing any missing system packages (it uses sudo for that step only).
-Easy Note then appears in your app menu and starts right away.
+EasyNote then appears in your app menu and starts right away.
 
 - Open/close from the keyboard: add a custom shortcut in your desktop settings that runs `easynote --toggle`.
 - Quit from a terminal: `easynote --quit`
